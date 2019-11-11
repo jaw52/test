@@ -22,7 +22,7 @@
 		mounted: function() {
 			
 			// 请求广场页面信息
-			this.axios.get("http://localhost:8888/browse")
+			this.axios.get("http://localhost:8888/mobilebrowse")
 				.then(response => {
 					this.workInfo =response.data
 				})

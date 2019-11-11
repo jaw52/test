@@ -49,7 +49,7 @@
 			let postData=this.$qs.stringify({
 				nickname:"什么时候会画画了再把名字改回来"
 			})	
-			this.axios.post("http://localhost:8888/follow",postData)
+			this.axios.post("http://localhost:8888/mobilefollow",postData)
 				.then(response=>{
 					this.followInfo=response.data
 				})

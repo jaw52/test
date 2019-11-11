@@ -6,7 +6,15 @@
 
 <script>
 	export default {
-		name: 'app'
+		name: 'app',
+		mounted() {
+			
+			/* TEST CODE */
+			localStorage.setItem("accountMes",JSON.stringify({
+				nickname:"什么时候会画画了再把名字改回来",
+				headimg:"//hbimg.huabanimg.com/663da7775232565c74e813bafbd59d3b5390f9a327312-n14lC2_sq120"
+			}))
+		}
 	}
 </script>
 
@@ -17,14 +25,13 @@
 	}
 	/* 设置字体图标 */
 	@font-face {
-		font-family: 'iconfont';
-		/* project id 1500739 */
-		src: url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.eot');
-		src: url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.eot?#iefix') format('embedded-opentype'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.woff2') format('woff2'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.woff') format('woff'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.ttf') format('truetype'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.svg#iconfont') format('svg');
+	  font-family: 'iconfont';  /* project id 1500739 */
+	  src: url('//at.alicdn.com/t/font_1500739_l7ykhxim4ee.eot');
+	  src: url('//at.alicdn.com/t/font_1500739_l7ykhxim4ee.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1500739_l7ykhxim4ee.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1500739_l7ykhxim4ee.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1500739_l7ykhxim4ee.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1500739_l7ykhxim4ee.svg#iconfont') format('svg');
 	}
 
 	.iconfont {
