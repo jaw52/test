@@ -1,13 +1,14 @@
 <template>
 	<!-- 关注列表 -->
 	<div class="follow">
-		<my-nav></my-nav>
 		<!-- 账户卡片 -->
 		<div class="name-card">
-			<van-image class="avatar" round :src="headimg"></van-image>
+			<div @click="goToHome()">
+				<van-image class="avatar" round :src="headimg" ></van-image>
+			</div>
 			<div class="info">
-				<p class="account-name">周星星</p>
-				<span class="follow-count" @touchstart="test">{{followInfo.length}}关注</span>
+				<p class="account-name" @touchstart="goToHome">{{nickname}}</p>
+				<span class="follow-count">{{followInfo.length}}关注</span>
 			</div>
 		</div>
 		<!-- 关注瀑布 -->
@@ -25,23 +26,25 @@
 	</div>
 </template>
 
-<script>
-	import Nav from '@/components/Nav.vue';
-	
+<script>	
 	export default{
 		name:"Follow",
-		components:{
-			"my-nav":Nav
-		},
 		data() {
 			return {
 				followInfo:[],
-				headimg:"//hbimg.huabanimg.com/663da7775232565c74e813bafbd59d3b5390f9a327312-n14lC2_sq120"
+				nickname:JSON.parse(localStorage.getItem("accountMes")).nickname,
+				headimg:JSON.parse(localStorage.getItem("accountMes")).headimg
 			}
 		},
 		methods: {
-			test() {
-				console.log(11)
+			/* 调转至个人主页 */
+			goToHome(){
+				this.$router.push({
+					path:"/user",
+					query:{
+						nickname:this.nickname
+					}
+				})
 			}
 		},
 		mounted() {

@@ -1,7 +1,6 @@
 <template>
 	<div class="nav">
-		<van-nav-bar title="标题" left-text="返回" left-arrow>
-
+		<van-nav-bar title="标题" left-text="返回" left-arrow  @click-left="back">
 			<div slot="right">
 				<div class="btn">
 					<i class="iconfont">&#xe611;</i>
@@ -12,24 +11,21 @@
 				</div>
 			</div>
 		</van-nav-bar>
+
 		<transition name="fade">
 			<div class="pull-down" v-if="isPulldown">
-				<div class="user-card">
+				<div class="user-card" @touchstart="goToHome">
 					<van-image fit="cover" class="avatar" :src="headimg"></van-image>
 					<span>{{pulldownNickname}}</span>
 					<van-icon name="arrow"></van-icon>
 				</div>
 				<ul class="link-list">
-					<li>
-						我的关注
-						<van-icon name="arrow"></van-icon>
-					</li>
-					<li>
-						热门
+					<li @touchstart="goTo(item.url)" v-for="item in linkData" :key="item.id">
+						{{item.title}}
 						<van-icon name="arrow"></van-icon>
 					</li>
 				</ul>
-				<div class="bottom">
+				<div class="bottom" @touchstart="logout">
 					<div class="logout-btn">退出登陆</div>
 				</div>
 			</div>
@@ -45,7 +41,18 @@
 			return {
 				isPulldown: false, //目前下拉菜单有无
 				headimg: JSON.parse(localStorage.getItem("accountMes")).headimg,
-				nickname: JSON.parse(localStorage.getItem("accountMes")).nickname
+				nickname: JSON.parse(localStorage.getItem("accountMes")).nickname,
+				linkData: [{
+						id: 0,
+						title: "我的关注",
+						url: "/follow"
+					},
+					{
+						id: 1,
+						title: "热门",
+						url: "/browse"
+					},
+				]
 			}
 		},
 		computed: {
@@ -54,15 +61,31 @@
 			}
 		},
 		methods: {
-
-			onClickLeft() {
-				Toast('返回');
+			//返回
+			back() {
+				this.$router.go(-1)
 			},
-			onClickRight() {
-				Toast('按钮');
+			goTo(path){
+				if(this.$route.path==path){
+					this.$router.go(0);
+					this.$router.push(path)
+				}else{
+					this.$router.push(path)
+				}
 			},
-
-		},
+			logout(){
+				console.log(1)
+			},
+			/* 调转至个人主页 */
+			goToHome(){
+				this.$router.push({
+					path:"/user",
+					query:{
+						nickname:this.nickname
+					}
+				})
+			}
+		}
 	}
 </script>
 
@@ -166,7 +189,7 @@
 	}
 
 	.fade-leave-active {
-		transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+		transition: all .3s ease;
 	}
 
 	.fade-enter,

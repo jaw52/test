@@ -8,7 +8,6 @@
 <script>
 	import Waterfall from '@/components/Waterfall.vue';
 	
-	
 	export default {
 		name: "Browse",
 		components: {
@@ -34,5 +33,7 @@
 </script>
 
 <style scoped="scoped">
-
+	.waterfall{
+		margin-top: 0.26rem;
+	}
 </style>

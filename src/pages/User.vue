@@ -43,12 +43,13 @@
 		mounted() {
 			
 			/* 请求用户作品信息 */
+			this.nickname=this.$route.query.nickname
+
 			let postData=this.$qs.stringify({
-				nickname:"什么时候会画画了再把名字改回来"
+				nickname:this.nickname
 			})
 			this.axios.post("http://localhost:8888/mobileinfo",postData)
 				.then(response => {				
-					this.nickname=response.data[0].nickname
 					this.headimg=response.data[0].headimg
 					this.introduce=response.data[0].intrduce
 					this.sex=response.data[0].sex

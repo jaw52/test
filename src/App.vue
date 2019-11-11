@@ -1,18 +1,23 @@
 <template>
 	<div id="app">
+		<my-nav></my-nav>
 		<router-view></router-view>
 	</div>
 </template>
 
 <script>
+	import Nav from '@/components/Nav.vue'
 	export default {
 		name: 'app',
+		components:{
+			"my-nav":Nav
+		},
 		mounted() {
 			
 			/* TEST CODE */
 			localStorage.setItem("accountMes",JSON.stringify({
 				nickname:"什么时候会画画了再把名字改回来",
-				headimg:"//hbimg.huabanimg.com/663da7775232565c74e813bafbd59d3b5390f9a327312-n14lC2_sq120"
+				headimg:"https://p3-bcy.byteimg.com/img/banciyuan/Public/Upload/avatar/3057721/173c98251b8f4f1e9fbb57b1b3174a03/fat.jpg~tplv-banciyuan-amiddle.image"
 			}))
 		}
 	}

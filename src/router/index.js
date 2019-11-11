@@ -17,7 +17,7 @@ export default new VueRouter({
 			name:"Browse",
 			component:Browse
 		},{
-			path:"/",
+			path:"/follow",
 			name:"Follow",
 			component:Follow
 		}
