@@ -13,20 +13,22 @@
 		</van-nav-bar>
 		<transition name="fade">
 			<div class="pull-down" v-if="isPulldown">
-				<div class="user-card" @touchstart="goToHome">
-					<van-image fit="cover" class="avatar" :src="headimg"></van-image>
-					<span>{{pulldownNickname}}</span>
-					<van-icon name="arrow"></van-icon>
-				</div>
-				<ul class="link-list">
-					<li @touchstart="goTo(item.url)" v-for="item in linkData" :key="item.id">
-						{{item.title}}
+				<!-- <div v-if="isLogin"> -->
+					<div class="user-card" @touchstart="goToHome">
+						<van-image fit="cover" class="avatar" :src="headimg"></van-image>
+						<span>{{pulldownNickname}}</span>
 						<van-icon name="arrow"></van-icon>
-					</li>
-				</ul>
-				<div class="bottom" @touchstart="logout">
-					<div class="logout-btn">退出登陆</div>
-				</div>
+					</div>
+					<ul class="link-list">
+						<li @touchstart="goTo(item.url)" v-for="item in linkData" :key="item.id">
+							{{item.title}}
+							<van-icon name="arrow"></van-icon>
+						</li>
+					</ul>
+					<div class="bottom" @touchstart="logout">
+						<div class="logout-btn">退出登陆</div>
+					</div>
+				<!-- </div> -->
 			</div>
 		</transition>
 	</div>
@@ -50,13 +52,27 @@
 						id: 1,
 						title: "热门",
 						url: "/browse"
+					}
+				],
+				offlineLineData: [{
+						id: 0,
+						title: "登陆",
+						url: "/login"
 					},
+					{
+						id: 1,
+						title: "注册",
+						url: "/browse"
+					}
 				]
 			}
 		},
 		computed: {
 			pulldownNickname() {
 				return this.nickname.substring(0, 6) + "..."
+			},
+			isLogin(){
+				return localStorage.getItem("Flag")?true:false
 			}
 		},
 		methods: {
@@ -73,7 +89,12 @@
 				}
 			},
 			logout() {
-				console.log(1)
+
+				localStorage.removeItem("accountMes");
+				localStorage.removeItem("Flag");
+				this.$store.commit("logout");
+
+				this.$router.push('/login')
 			},
 			/* 调转至个人主页 */
 			goToHome() {
@@ -95,16 +116,21 @@
 				}
 
 			}
+		},
+		mounted() {
+			// console.log(JSON.parse(localStorage.getItem("accountMes")).nickname,)
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	.nav{
+	.nav {
 		position: fixed;
 		width: 100%;
 		z-index: 99;
+		top: 0;
 	}
+
 	.nav>>>.van-nav-bar__right div {
 		display: flex;
 		align-items: center;

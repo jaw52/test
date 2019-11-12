@@ -44,7 +44,7 @@
 			
 			/* 请求用户作品信息 */
 			this.nickname=this.$route.query.nickname
-
+			console.log(this.nickname)
 			let postData=this.$qs.stringify({
 				nickname:this.nickname
 			})
