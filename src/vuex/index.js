@@ -16,6 +16,6 @@ export default new Vuex.Store({
 		//登出
 		logout:function(state){
 			state.isLogin=false
-		}
+		},
 	}
 })

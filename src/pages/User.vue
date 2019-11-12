@@ -2,6 +2,7 @@
 	<!-- 个人主页 -->
 	<div class="User">
 		<div class="mes-card">
+			
 			<div class="card-top">
 				<van-image round width="2.13rem" height="2.13rem" fit="cover" :src="headimg" />
 				<van-button type="info">关注</van-button>

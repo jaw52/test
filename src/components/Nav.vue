@@ -1,6 +1,7 @@
 <template>
 	<div class="nav">
-		<van-nav-bar title="标题" left-text="返回" left-arrow @click-left="back">
+		<!--  使用router 中配置的meta字段，动态改变导航栏的标题 -->
+		<van-nav-bar :title="$route.meta.title" left-text="返回" left-arrow @click-left="back">
 			<div slot="right">
 				<div class="btn">
 					<i class="iconfont">&#xe611;</i>
@@ -13,7 +14,7 @@
 		</van-nav-bar>
 		<transition name="fade">
 			<div class="pull-down" v-if="isPulldown">
-				<!-- <div v-if="isLogin"> -->
+				<div v-if="$store.state.isLogin">
 					<div class="user-card" @touchstart="goToHome">
 						<van-image fit="cover" class="avatar" :src="headimg"></van-image>
 						<span>{{pulldownNickname}}</span>
@@ -28,7 +29,15 @@
 					<div class="bottom" @touchstart="logout">
 						<div class="logout-btn">退出登陆</div>
 					</div>
-				<!-- </div> -->
+				</div>
+				<div v-else>
+					<ul class="link-list">
+						<li @touchstart="goTo(item.url)" v-for="item in LogoutLineData" :key="item.id">
+							{{item.title}}
+							<van-icon name="arrow"></van-icon>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</transition>
 	</div>
@@ -54,7 +63,7 @@
 						url: "/browse"
 					}
 				],
-				offlineLineData: [{
+				LogoutLineData: [{
 						id: 0,
 						title: "登陆",
 						url: "/login"
@@ -62,7 +71,7 @@
 					{
 						id: 1,
 						title: "注册",
-						url: "/browse"
+						url: "/registerone"
 					}
 				]
 			}
@@ -71,8 +80,8 @@
 			pulldownNickname() {
 				return this.nickname.substring(0, 6) + "..."
 			},
-			isLogin(){
-				return localStorage.getItem("Flag")?true:false
+			isLogin() {
+				return localStorage.getItem("Flag") ? true : false
 			}
 		},
 		methods: {
@@ -94,7 +103,8 @@
 				localStorage.removeItem("Flag");
 				this.$store.commit("logout");
 
-				this.$router.push('/login')
+				this.$router.push('/login');
+				this.isLogout = true
 			},
 			/* 调转至个人主页 */
 			goToHome() {
@@ -114,11 +124,10 @@
 						}
 					})
 				}
-
 			}
 		},
 		mounted() {
-			// console.log(JSON.parse(localStorage.getItem("accountMes")).nickname,)
+			console.log(this.$store.state.isLogin)
 		}
 	}
 </script>
