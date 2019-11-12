@@ -1,7 +1,7 @@
 <template>
 	<!-- 单个作品组件 -->
 	<div class="card">
-			<img :src="imgUrl" class="content-img"></img>
+			<img :src="imgUrl" v-lazy="imgUrl" @touchstart="viewImg" class="content-img"></img>
 			<p class="desc">{{descText}}</p>
 			<div class="bottom">
 				<div class="bottom-left">
@@ -36,6 +36,14 @@
 			},
 			name() {
 				return this.nickname.substring(0, 6) + "..."
+			}
+		},
+		methods: {
+			/* 查看大图 */
+			viewImg() {
+				this.$imagePreview([
+					this.cardData.workimg
+				])
 			}
 		},
 		mounted() {

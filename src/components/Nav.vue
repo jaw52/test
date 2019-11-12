@@ -1,6 +1,6 @@
 <template>
 	<div class="nav">
-		<van-nav-bar title="标题" left-text="返回" left-arrow  @click-left="back">
+		<van-nav-bar title="标题" left-text="返回" left-arrow @click-left="back">
 			<div slot="right">
 				<div class="btn">
 					<i class="iconfont">&#xe611;</i>
@@ -11,7 +11,6 @@
 				</div>
 			</div>
 		</van-nav-bar>
-
 		<transition name="fade">
 			<div class="pull-down" v-if="isPulldown">
 				<div class="user-card" @touchstart="goToHome">
@@ -65,31 +64,47 @@
 			back() {
 				this.$router.go(-1)
 			},
-			goTo(path){
-				if(this.$route.path==path){
+			goTo(path) {
+				if (this.$route.path == path) {
 					this.$router.go(0);
 					this.$router.push(path)
-				}else{
+				} else {
 					this.$router.push(path)
 				}
 			},
-			logout(){
+			logout() {
 				console.log(1)
 			},
 			/* 调转至个人主页 */
-			goToHome(){
-				this.$router.push({
-					path:"/user",
-					query:{
-						nickname:this.nickname
-					}
-				})
+			goToHome() {
+				if (this.$route.path == "/user") {
+					this.$router.go(0);
+					this.$router.push({
+						path: "/user",
+						query: {
+							nickname: this.nickname
+						}
+					})
+				} else {
+					this.$router.push({
+						path: "/user",
+						query: {
+							nickname: this.nickname
+						}
+					})
+				}
+
 			}
 		}
 	}
 </script>
 
 <style scoped="scoped">
+	.nav{
+		position: fixed;
+		width: 100%;
+		z-index: 99;
+	}
 	.nav>>>.van-nav-bar__right div {
 		display: flex;
 		align-items: center;

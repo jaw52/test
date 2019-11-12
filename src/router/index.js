@@ -21,6 +21,5 @@ export default new VueRouter({
 			name:"Follow",
 			component:Follow
 		}
-		
 	],
 })
