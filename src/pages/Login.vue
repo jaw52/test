@@ -35,6 +35,8 @@
 					} else {
 						this.show = false
 						
+						// Toast.success('登陆成功')
+						
 						/* 将登陆状态放置于缓存中，并更新vuex置于isLogin:true */
 						this.$store.commit("login");
 						console.log(response.data)
@@ -45,6 +47,7 @@
 						localStorage.setItem("Flag", "isLogin")
 						
 						/* 跳转 */
+						
 						this.$router.push({
 							path:"/user",
 							query:{
@@ -64,5 +67,6 @@
 <style scoped>
 	.tips {
 		color: firebrick;
+		padding:0.16rem 0.42rem;
 	}
 </style>

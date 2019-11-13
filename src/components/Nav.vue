@@ -50,8 +50,8 @@
 		data() {
 			return {
 				isPulldown: false, //目前下拉菜单有无
-				headimg: JSON.parse(localStorage.getItem("accountMes")).headimg,
-				nickname: JSON.parse(localStorage.getItem("accountMes")).nickname,
+				headimg: "",
+				nickname: "",
 				linkData: [{
 						id: 0,
 						title: "我的关注",
@@ -127,7 +127,12 @@
 			}
 		},
 		mounted() {
-			console.log(this.$store.state.isLogin)
+			console.log(1)
+			/* 存在登陆状态，初始化赋值 */
+			if (localStorage.getItem("accountMes")) {
+				this.nickname = JSON.parse(localStorage.getItem("accountMes")).nickname
+				this.headimg = JSON.parse(localStorage.getItem("accountMes")).headimg
+			}
 		}
 	}
 </script>

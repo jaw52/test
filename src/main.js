@@ -26,6 +26,9 @@ Vue.use(VueLazyload)
 import {ImagePreview} from 'vant'
 Vue.prototype.$imagePreview=ImagePreview
 
+import { Toast } from 'vant'
+Vue.use(Toast)
+
 /* 
 	
 	to: Route: 即将要进入的目标路由对象
