@@ -13,10 +13,11 @@
 			</div>
 		</van-nav-bar>
 		<transition name="fade">
+			<!-- 登录状态的下拉菜单 -->
 			<div class="pull-down" v-if="isPulldown">
 				<div v-if="$store.state.isLogin">
 					<div class="user-card" @touchstart="goToHome">
-						<van-image fit="cover" class="avatar" :src="headimg"></van-image>
+						<van-image fit="cover" class="avatar" :src="this.$store.state.headimg"></van-image>
 						<span>{{pulldownNickname}}</span>
 						<van-icon name="arrow"></van-icon>
 					</div>
@@ -30,7 +31,12 @@
 						<div class="logout-btn">退出登陆</div>
 					</div>
 				</div>
+				<!-- 退出登陆后的下拉菜单 -->
 				<div v-else>
+					<div class="btn-div">
+						<router-link class="logout-btn" to="/registerone">注册</router-link>
+						<router-link class="login-btn" to="/login">登陆</router-link>
+					</div>
 					<ul class="link-list">
 						<li @touchstart="goTo(item.url)" v-for="item in LogoutLineData" :key="item.id">
 							{{item.title}}
@@ -50,8 +56,6 @@
 		data() {
 			return {
 				isPulldown: false, //目前下拉菜单有无
-				headimg: "",
-				nickname: "",
 				linkData: [{
 						id: 0,
 						title: "我的关注",
@@ -61,24 +65,23 @@
 						id: 1,
 						title: "热门",
 						url: "/browse"
+					},{
+						id:2,
+						title:"首页",
+						url:"/"
 					}
 				],
+				/* 退出登陆后，导航栏下拉菜单内容 */
 				LogoutLineData: [{
-						id: 0,
-						title: "登陆",
-						url: "/login"
-					},
-					{
-						id: 1,
-						title: "注册",
-						url: "/registerone"
-					}
-				]
+					id: 0,
+					title: "热门",
+					url: "/browse"
+				}]
 			}
 		},
 		computed: {
 			pulldownNickname() {
-				return this.nickname.substring(0, 6) + "..."
+				return this.$store.state.nickname.substring(0, 6) + "..."
 			},
 			isLogin() {
 				return localStorage.getItem("Flag") ? true : false
@@ -97,43 +100,38 @@
 					this.$router.push(path)
 				}
 			},
+			/* 登出 */
 			logout() {
 
 				localStorage.removeItem("accountMes");
 				localStorage.removeItem("Flag");
 				this.$store.commit("logout");
-
 				this.$router.push('/login');
 				this.isLogout = true
 			},
 			/* 调转至个人主页 */
 			goToHome() {
+				
+				let nickname=this.$store.state.nickname
+				
 				if (this.$route.path == "/user") {
 					this.$router.go(0);
 					this.$router.push({
 						path: "/user",
 						query: {
-							nickname: this.nickname
+							nickname
 						}
 					})
 				} else {
 					this.$router.push({
 						path: "/user",
 						query: {
-							nickname: this.nickname
+							nickname
 						}
 					})
 				}
 			}
 		},
-		mounted() {
-			console.log(1)
-			/* 存在登陆状态，初始化赋值 */
-			if (localStorage.getItem("accountMes")) {
-				this.nickname = JSON.parse(localStorage.getItem("accountMes")).nickname
-				this.headimg = JSON.parse(localStorage.getItem("accountMes")).headimg
-			}
-		}
 	}
 </script>
 
@@ -182,7 +180,6 @@
 		font-size: 0.42rem;
 		position: absolute;
 		top: 1.17rem;
-		z-index: 99;
 	}
 
 	.user-card {
@@ -235,20 +232,40 @@
 		background: linear-gradient(#E53E49, #D43636);
 		line-height: 1.06rem;
 		text-align: center;
+		border-radius: 0.1rem;
+		color: #DDD;
+	}
+
+	/* 退出登陆后的下拉菜单 */
+	.btn-div {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.53rem;
+		border-bottom: 0.02rem solid #3B3B3B;
+	}
+
+	.login-btn {
+		width: 3.14rem;
+		text-align: center;
+		line-height: 1.06rem;
+		background: linear-gradient(#FAFAFA, #F2F2F2);
+		color: #444;
+		margin-left: 0.42rem;
+		border-radius: 0.1rem;
 	}
 
 	/* 动画效果 */
 	.fade-enter-active {
-
-		transition: all .3s ease;
+		transition: all .5s ease;
 	}
 
 	.fade-leave-active {
-		transition: all .3s ease;
+		transition: all .5s ease;
 	}
 
 	.fade-enter,
 	.fade-leave-active {
-		opacity: 0;
+		top: -6.26rem;
+		opacity: 0.8;
 	}
 </style>

@@ -29,6 +29,9 @@ Vue.prototype.$imagePreview=ImagePreview
 import { Toast } from 'vant'
 Vue.use(Toast)
 
+import infiniteScroll  from 'vue-infinite-scroll';
+Vue.use(infiniteScroll)
+
 /* 
 	
 	to: Route: 即将要进入的目标路由对象

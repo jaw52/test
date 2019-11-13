@@ -18,7 +18,7 @@ export default new VueRouter({
 			name:"User",
 			component:User,
 			meta: {
-				title:"用户",
+				title:"个人主页",
 				isLogin: true
 			}
 		},{
@@ -63,8 +63,8 @@ export default new VueRouter({
 			name: "HomePage",
 			component: HomePage,
 			meta:{
-				title:"关注"
+				title:"主页"
 			}
-		}
-	],
+		},
+	]
 })

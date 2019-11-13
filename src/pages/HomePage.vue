@@ -1,7 +1,12 @@
 <template>
 	<div class="home-box">
-		<div class="page-content">
-			<div class="list" v-for="(item,index) in list" :key="item.id">
+		<!-- 
+			v-infinite-scroll：指定执行刷新的函数，
+			infinite-scroll-disabled：是否启用刷新功能,
+			infinite-sroll-distance：离页尾多少px执行刷新函数 
+		-->
+		<div class="page-content" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-sroll-distance="10">
+			<div class="list" v-for="(item,index) in loadData" :key="item.id">
 				<div class="headimg">
 					<van-image round width="1.07rem" height="1.07rem" fit="cover" :src="item.headimg" />
 					<span class="nickname">{{item.nickname}}</span>
@@ -23,6 +28,8 @@
 					</div>
 				</div>
 			</div>
+			<!-- 加载反馈组件 -->
+			<van-loading v-if="busy" type="spinner" size="16px">加载中...</van-loading>
 		</div>
 	</div>
 </template>
@@ -32,8 +39,11 @@
 		name: 'HomePage',
 		data() {
 			return {
-				list: [],
+				list: [],//保存请求服务器得到的数据
+				loadData:[],//读取到展示在页面的数据
+				count:0,//用于下拉刷新时，计数
 				tagList: [1, 2],
+				busy: false,//busy为false表示空闲,可执行loadMore(下拉刷新)
 			}
 		},
 		methods: {
@@ -45,13 +55,23 @@
 					this.list[index][0].work_like--;
 				}
 				return
+			},
+			/* 下拉刷新处理 */
+			loadMore() {
+				this.busy = true;
+				setTimeout(() => {
+					for (var i = 0, j = 10; i < j; i++) {
+						this.loadData.push(this.list[this.count++])//每次刷新，读取10个数据
+					}
+					this.busy = false
+				}, 1000)
 			}
 		},
-	
+
 		mounted() {
-			
+
 			let nickname = JSON.parse(localStorage.getItem('accountMes')).nickname
-			
+
 			this.axios.get("http://localhost:8888/getfollow", {
 				params: {
 					nickname
@@ -94,8 +114,12 @@
 
 	.desc {
 		font-size: 0.39rem;
-		line-height: 0.39rem;
+		line-height: 0.53rem;
 		margin: 0.34rem 0 0.21rem;
+	}
+
+	.workimg>>>img {
+		border-radius: 0.16rem;
 	}
 
 	.tags {
@@ -128,5 +152,10 @@
 	.footer .footer-content i {
 		font-size: 0.64rem;
 		margin-right: 0.21rem;
+	}
+	/* 加载反馈组件 */
+	.van-loading{
+		display: flex;
+		justify-content: center;
 	}
 </style>

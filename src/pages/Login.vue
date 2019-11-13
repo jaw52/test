@@ -33,18 +33,19 @@
 						
 						this.show = true
 					} else {
+						
 						this.show = false
 						
-						// Toast.success('登陆成功')
+						this.$toast.success('登陆成功')
 						
 						/* 将登陆状态放置于缓存中，并更新vuex置于isLogin:true */
-						this.$store.commit("login");
 						console.log(response.data)
 						localStorage.setItem("accountMes", JSON.stringify({
 							nickname: response.data.userMes.nickname,
 							headimg: response.data.userMes.headimg
 						}))
-						localStorage.setItem("Flag", "isLogin")
+						localStorage.setItem("Flag", "isLogin");
+						this.$store.commit("login");
 						
 						/* 跳转 */
 						
