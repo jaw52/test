@@ -8,7 +8,6 @@
 <script>
 	import Waterfall from '@/components/Waterfall.vue';
 	
-	
 	export default {
 		name: "Browse",
 		components: {
@@ -21,8 +20,9 @@
 		},
 		mounted: function() {
 			
+			let searchVal=this.$route.query.searchVal?this.$route.query.searchVal:""
 			// 请求广场页面信息
-			this.axios.get("http://localhost:8888/browse")
+			this.axios.get(`http://localhost:8888/mobilebrowse?searchVal=${searchVal}`)
 				.then(response => {
 					this.workInfo =response.data
 				})
@@ -34,5 +34,7 @@
 </script>
 
 <style scoped="scoped">
-
+	.waterfall{
+		margin-top: 0.26rem;
+	}
 </style>

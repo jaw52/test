@@ -1,12 +1,19 @@
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<my-nav></my-nav>
+		<div class="main">
+			<router-view></router-view>
+		</div>
 	</div>
 </template>
 
 <script>
+	import Nav from '@/components/Nav.vue'
 	export default {
-		name: 'app'
+		name: 'app',
+		components:{
+			"my-nav":Nav
+		}
 	}
 </script>
 
@@ -17,14 +24,13 @@
 	}
 	/* 设置字体图标 */
 	@font-face {
-		font-family: 'iconfont';
-		/* project id 1500739 */
-		src: url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.eot');
-		src: url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.eot?#iefix') format('embedded-opentype'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.woff2') format('woff2'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.woff') format('woff'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.ttf') format('truetype'),
-			url('//at.alicdn.com/t/font_1500739_h0kmbxpqoy.svg#iconfont') format('svg');
+	  font-family: 'iconfont';  /* project id 1500739 */
+	  src: url('//at.alicdn.com/t/font_1500739_geh7bjdt5v.eot');
+	  src: url('//at.alicdn.com/t/font_1500739_geh7bjdt5v.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1500739_geh7bjdt5v.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1500739_geh7bjdt5v.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1500739_geh7bjdt5v.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1500739_geh7bjdt5v.svg#iconfont') format('svg');
 	}
 
 	.iconfont {
@@ -43,4 +49,8 @@
 		color: #2c3e50;
 		font-size: 0.32rem;
 	}
+	.main{
+		margin-top: 1.22rem;
+	}
+	
 </style>
