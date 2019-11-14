@@ -2,8 +2,16 @@
 	<div class="nav">
 		<!--  使用router 中配置的meta字段，动态改变导航栏的标题 -->
 		<van-nav-bar :title="$route.meta.title" left-text="返回" left-arrow @click-left="back">
+<<<<<<< HEAD
 			<div slot="right">
 				<div class="btn">
+=======
+			<van-cell-group slot="title" v-if="isSearch">
+				<van-field v-model="searchVal" placeholder="搜索用户" />
+			</van-cell-group>
+			<div slot="right">
+				<div class="btn search-btn" @touchstart="search">
+>>>>>>> dev
 					<i class="iconfont">&#xe611;</i>
 				</div>
 				<div :class="['btn',isPulldown?'touch-color':'']" @touchstart="isPulldown=!isPulldown">
@@ -76,7 +84,14 @@
 					id: 0,
 					title: "热门",
 					url: "/browse"
+<<<<<<< HEAD
 				}]
+=======
+				}],
+				searchVal: '', //搜索值
+				isSearch: false, //是否显示搜索框
+				goSearch: false //确认调转至搜索页面
+>>>>>>> dev
 			}
 		},
 		computed: {
@@ -102,6 +117,7 @@
 			},
 			/* 登出 */
 			logout() {
+<<<<<<< HEAD
 
 				localStorage.removeItem("accountMes");
 				localStorage.removeItem("Flag");
@@ -114,6 +130,21 @@
 
 				let nickname = this.$store.state.nickname
 
+=======
+
+				localStorage.removeItem("accountMes");
+				localStorage.removeItem("Flag");
+				this.$store.commit("logout");
+				this.$router.push('/login');
+				this.isLogout = true;
+
+			},
+			/* 调转至个人主页 */
+			goToHome() {
+
+				let nickname = this.$store.state.nickname
+
+>>>>>>> dev
 				if (this.$route.path == "/user") {
 					this.$router.go(0);
 					this.$router.push({
@@ -130,8 +161,30 @@
 						}
 					})
 				}
+<<<<<<< HEAD
 			}
 		},
+=======
+			},
+			/* 搜索 */
+			search() {
+				if (this.goSearch) {
+					this.$router.push({
+						path: "/browse",
+						query: {
+							searchVal: this.searchVal
+						}
+					})
+					if (this.$route.path == '/browse') {
+						this.$router.go(0)
+					}	
+				} else {
+					this.isSearch = true;
+					this.goSearch = true;
+				}
+			}
+		}
+>>>>>>> dev
 	}
 </script>
 
@@ -167,6 +220,33 @@
 		justify-content: center;
 	}
 
+<<<<<<< HEAD
+=======
+	/* 搜索框 */
+	.search-btn:active {
+		color: #cd1111;
+	}
+
+	.nav .van-cell-group {
+		height: 1.22667rem;
+		display: flex;
+		align-items: center;
+		width: 5.33rem;
+	}
+
+	.nav>>>.van-cell {
+		padding: 0;
+	}
+
+	.van-nav-bar>>>input {
+		background-color: #f3f3f3;
+		padding: 0 0.21rem;
+		height: 0.74rem;
+		border: 1px solid #DDD;
+
+	}
+
+>>>>>>> dev
 	/* 点击按钮后的背景色 */
 	.touch-color {
 		background-color: #f2f2f2;
