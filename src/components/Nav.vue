@@ -65,10 +65,10 @@
 						id: 1,
 						title: "热门",
 						url: "/browse"
-					},{
-						id:2,
-						title:"首页",
-						url:"/"
+					}, {
+						id: 2,
+						title: "首页",
+						url: "/"
 					}
 				],
 				/* 退出登陆后，导航栏下拉菜单内容 */
@@ -111,9 +111,9 @@
 			},
 			/* 调转至个人主页 */
 			goToHome() {
-				
-				let nickname=this.$store.state.nickname
-				
+
+				let nickname = this.$store.state.nickname
+
 				if (this.$route.path == "/user") {
 					this.$router.go(0);
 					this.$router.push({

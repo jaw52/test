@@ -52,4 +52,5 @@
 	.main{
 		margin-top: 1.22rem;
 	}
+	
 </style>

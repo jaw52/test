@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<!-- 加载反馈组件 -->
-			<van-loading v-if="busy" type="spinner" size="16px">加载中...</van-loading>
+			<van-loading v-if="isLoading" type="spinner" size="16px">加载中...</van-loading>
 		</div>
 	</div>
 </template>
@@ -39,11 +39,12 @@
 		name: 'HomePage',
 		data() {
 			return {
-				list: [],//保存请求服务器得到的数据
-				loadData:[],//读取到展示在页面的数据
-				count:0,//用于下拉刷新时，计数
+				list: [], //保存请求服务器得到的数据
+				loadData: [], //读取到展示在页面的数据
+				count: 0, //用于下拉刷新时，计数
 				tagList: [1, 2],
-				busy: false,//busy为false表示空闲,可执行loadMore(下拉刷新)
+				busy: false, //busy为false表示空闲,可执行loadMore(下拉刷新)
+				isLoading: true
 			}
 		},
 		methods: {
@@ -59,12 +60,18 @@
 			/* 下拉刷新处理 */
 			loadMore() {
 				this.busy = true;
-				setTimeout(() => {
-					for (var i = 0, j = 10; i < j; i++) {
-						this.loadData.push(this.list[this.count++])//每次刷新，读取10个数据
-					}
-					this.busy = false
-				}, 1000)
+				if (this.count < this.list.length || this.count == 0) {
+					setTimeout(() => {
+						for (var i = 0, j = 6; i < j; i++) {
+							if (this.count + 1 <= this.list.length) {
+								this.loadData.push(this.list[this.count++]) //每次刷新，读取6个数据
+							}
+						}
+						this.busy = false
+					}, 2000)
+				} else {
+					this.isLoading = false
+				}
 			}
 		},
 
@@ -118,6 +125,12 @@
 		margin: 0.34rem 0 0.21rem;
 	}
 
+	/* 图片展示区域 */
+	.workimg {
+		display: flex;
+		justify-content: center;
+	}
+
 	.workimg>>>img {
 		border-radius: 0.16rem;
 	}
@@ -153,8 +166,10 @@
 		font-size: 0.64rem;
 		margin-right: 0.21rem;
 	}
+
+
 	/* 加载反馈组件 */
-	.van-loading{
+	.van-loading {
 		display: flex;
 		justify-content: center;
 	}

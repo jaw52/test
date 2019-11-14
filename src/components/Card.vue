@@ -1,18 +1,18 @@
 <template>
 	<!-- 单个作品组件 -->
 	<div class="card">
-			<img :src="imgUrl" v-lazy="imgUrl" @touchstart="viewImg" class="content-img"></img>
-			<p class="desc">{{descText}}</p>
-			<div class="bottom">
-				<div class="bottom-left">
-					<img :src="cardData.headimg" alt="" class="avatar">
-					<span>{{name}}</span>
-				</div>
-				<div class="bottom-right">
-					<van-icon name="good-job-o" />
-					<span>{{cardData.work_like}}</span>
-				</div>
+		<img :src="imgUrl" v-lazy="imgUrl" class="content-img"></img>
+		<p class="desc">{{descText}}</p>
+		<div class="bottom">
+			<div class="bottom-left">
+				<img :src="cardData.headimg" alt="" class="avatar">
+				<span>{{name}}</span>
 			</div>
+			<div class="bottom-right">
+				<van-icon name="good-job-o" />
+				<span>{{cardData.work_like}}</span>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -40,14 +40,14 @@
 		},
 		methods: {
 			/* 查看大图 */
-			viewImg() {
+			/* viewImg() {
 				this.$imagePreview([
 					this.cardData.workimg
 				])
-			}
+			} */
 		},
 		mounted() {
-			
+
 		}
 	}
 </script>

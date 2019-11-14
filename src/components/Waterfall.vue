@@ -1,15 +1,16 @@
 <template>
 	<!-- 瀑布流展示作品 -->
-	<div class="waterfall" v-if="complete">
-		<!-- <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-sroll-distance="10">
+	<div class="waterfall">
+		<div v-show="complete" class="waterfall-container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy"
+		 infinite-sroll-distance="10">
 			<div class="waterfall-col">
 				<my-card v-for="(item,index) in cardData.firstCol" :key="item.id" :card-data="cardData.firstCol[index]"></my-card>
 			</div>
 			<div class="waterfall-col">
 				<my-card v-for="(item,index) in cardData.secondCol" :key="item.id" :card-data="cardData.secondCol[index]"></my-card>
 			</div>
-			<van-loading v-if="busy" type="spinner" size="16px">加载中...</van-loading>
-		</div> -->
+		</div>
+		<van-loading v-if="isLoading" type="spinner" size="16px">加载中...</van-loading>
 	</div>
 </template>
 
@@ -33,7 +34,8 @@
 				loadData: [], //读取到展示在页面的数据
 				count: 0, //用于下拉刷新时，计数
 				busy: false, //busy为false表示空闲,可执行loadMore(下拉刷新)
-				complete: false
+				complete: false,
+				isLoading: true
 			}
 		},
 		components: {
@@ -42,6 +44,10 @@
 		methods: {
 			//将请求的数据分为两个数组，方便页面展示
 			handleShow(cardArr) {
+				this.cardData={
+					firstCol: [], //第一列
+					secondCol: [],
+				}
 				for (let i = 0; i < cardArr.length; i++) {
 					if (i % 2 == 0) {
 						this.cardData.firstCol.push(cardArr[i])
@@ -53,27 +59,34 @@
 			/* 下拉刷新处理 */
 			loadMore() {
 				this.busy = true;
-				setTimeout(() => {
-					for (var i = 0, j = 10; i < j; i++) {
-						this.loadData.push(this.workInfo[this.count++]) //每次刷新，读取10个数据
+				console.log(this.count,this.workInfo.length)
+				if (this.count < this.workInfo.length || this.count == 0) {
+					setTimeout(() => {
+						for (var i = 0, j = 6; i < j; i++) {
+							if (this.count + 1 <= this.workInfo.length) {
+								this.loadData.push(this.workInfo[this.count++]) //每次刷新，读取6个数据
+							}
+						}
+						console.log(this.loadData)
 						this.handleShow(this.loadData)
-					}
-					this.busy = false
-				}, 1000)
+						this.busy = false
+					}, 1000)
+				} else {
+					this.isLoading = false
+				}
 			}
 		},
 		watch: {
-			/* 监听workInfo对象，当有值时才触发handleShow */
+			/* 监听workInfo对象，当有值时才触发渲染 */
 			workInfo(newValue) {
-				console.log(newValue)
-				this.complete = true
+				this.complete = true;
 			}
 		},
 	}
 </script>
 
 <style scoped="scoped">
-	.waterfall {
+	.waterfall-container {
 		display: flex;
 		justify-content: center;
 	}
