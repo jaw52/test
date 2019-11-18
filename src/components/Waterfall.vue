@@ -9,16 +9,12 @@
 			<div class="waterfall-col">
 				<my-card v-for="(item,index) in cardData.secondCol" :key="item.id" :card-data="cardData.secondCol[index]"></my-card>
 			</div>
-<<<<<<< HEAD
-=======
 		</div>
 		<van-loading v-if="isLoading" type="spinner" size="16px">加载中...</van-loading>
 		<!-- 到达提醒 -->
 		<div class="tips" v-if="!isLoading">
 			<div class="text">没有更多了</div>
->>>>>>> dev
 		</div>
-		<van-loading v-if="isLoading" type="spinner" size="16px">加载中...</van-loading>
 	</div>
 </template>
 
@@ -67,11 +63,7 @@
 			/* 下拉刷新处理 */
 			loadMore() {
 				this.busy = true;
-<<<<<<< HEAD
-				console.log(this.count,this.workInfo.length)
-=======
 				
->>>>>>> dev
 				if (this.count < this.workInfo.length || this.count == 0) {
 					setTimeout(() => {
 						for (var i = 0, j = 6; i < j; i++) {
@@ -79,10 +71,6 @@
 								this.loadData.push(this.workInfo[this.count++]) //每次刷新，读取6个数据
 							}
 						}
-<<<<<<< HEAD
-						console.log(this.loadData)
-=======
->>>>>>> dev
 						this.handleShow(this.loadData)
 						this.busy = false
 					}, 1000)
@@ -104,6 +92,7 @@
 	.waterfall-container {
 		display: flex;
 		justify-content: center;
+		margin-top: 0.26rem;
 	}
 
 	.waterfall-col {
@@ -113,8 +102,6 @@
 	.card {
 		padding: 0 0 0.4rem;
 	}
-<<<<<<< HEAD
-=======
 	/* 到底提醒 */
 	.tips {
 		height: 0.37rem;
@@ -136,7 +123,6 @@
 		border-radius: 0.37rem;
 		text-align: center;
 	}
->>>>>>> dev
 
 	/* 加载反馈组件 */
 	.van-loading {

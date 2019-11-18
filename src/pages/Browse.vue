@@ -22,11 +22,7 @@
 			
 			let searchVal=this.$route.query.searchVal?this.$route.query.searchVal:""
 			// 请求广场页面信息
-<<<<<<< HEAD
-			this.axios.get("http://localhost:8888/mobilebrowse")
-=======
 			this.axios.get(`http://localhost:8888/mobilebrowse?searchVal=${searchVal}`)
->>>>>>> dev
 				.then(response => {
 					this.workInfo =response.data
 				})

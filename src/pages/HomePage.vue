@@ -77,7 +77,7 @@
 
 		mounted() {
 
-			let nickname = JSON.parse(localStorage.getItem('accountMes')).nickname
+			let nickname = this.$store.state.nickname
 
 			this.axios.get("http://localhost:8888/getfollow", {
 				params: {
