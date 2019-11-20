@@ -60,7 +60,10 @@
 					}
 				}
 			},
-			/* 下拉刷新处理 */
+			/* 
+				下拉刷新处理 
+				TODO:使用AJAX请求来实现下拉刷新页面
+			*/
 			loadMore() {
 				this.busy = true;
 				

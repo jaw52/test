@@ -6,58 +6,58 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
 	routes: [{
-			path: "/user",
-			name: "User",
-			component: ()=>import('@/pages/User'),
-			meta: {
-				title: "个人主页",
-				isLogin: true
-			}
-		}, {
-			path: "/browse",
-			name: "Browse",
-			component: ()=>import('@/pages/Browse'),
-			meta: {
-				title: "热门"
-			}
-		}, {
-			path: "/follow",
-			name: "Follow",
-			component: ()=>import('@/pages/Follow'),
-			meta: {
-				title: "关注",
-				isLogin: true
-			}
-		}, {
-			path: "/login",
-			name: "Login",
-			component: ()=>import('@/pages/Login'),
-			meta: {
-				title: "登录"
-			}
-		}, {
-			path: '/registerone',
-			name: "RegisterOne",
-			component: ()=>import('@/pages/RegisterOne'),
-			meta: {
-				title: "注册"
-			}
-		},
-		{
-			path: '/registertwo',
-			name: "RegisterTwo",
-			component: ()=>import('@/pages/RegisterTwo'),
-			meta: {
-				title: "注册"
-			}
-		}, {
-			path: '/',
-			name: "HomePage",
-			component: ()=>import('@/pages/HomePage'),
-			meta: {
-				title: "主页"
-			}
-		},
+		path: "/user",
+		name: "User",
+		component: () => import('@/pages/User'),
+		meta: {
+			title: "个人主页",
+			isLogin: true
+		}
+	}, {
+		path: "/browse",
+		name: "Browse",
+		component: () => import('@/pages/Browse'),
+		meta: {
+			title: "热门"
+		}
+	}, {
+		path: "/follow",
+		name: "Follow",
+		component: () => import('@/pages/Follow'),
+		meta: {
+			title: "关注",
+			isLogin: true
+		}
+	}, {
+		path: "/login",
+		name: "Login",
+		component: () => import('@/pages/Login'),
+		meta: {
+			title: "登录"
+		}
+	}, {
+		path: '/registerone',
+		name: "RegisterOne",
+		component: () => import('@/pages/RegisterOne'),
+		meta: {
+			title: "注册"
+		}
+	},
+	{
+		path: '/registertwo',
+		name: "RegisterTwo",
+		component: () => import('@/pages/RegisterTwo'),
+		meta: {
+			title: "注册"
+		}
+	}, {
+		path: '/',
+		name: "HomePage",
+		component: () => import('@/pages/HomePage'),
+		meta: {
+			title: "主页"
+		}
+	},
 	]
 })
 
@@ -72,8 +72,7 @@ router.beforeEach((to, from, next) => {
 		document.title = to.meta.title //更改游览器网页标题
 	}
 
-	let getFlag = localStorage.getItem("Flag") /* 这里是判断用户是否登录过，因为在用户登录后会在localStroage内存储Flag=isLogin */
-	if (getFlag == "isLogin") {
+	if (localStorage.getItem('token')) {
 		store.state.isLogin = true
 		next()
 	} else {

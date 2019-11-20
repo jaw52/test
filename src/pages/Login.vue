@@ -22,43 +22,39 @@ export default {
   },
   methods: {
     login() {
-      this.axios
-        .get("http://localhost:8888/login", {
-          params: {
-            username: this.username,
-            passwd: this.password
-          }
+      /* 
+        将登陆状态放置于缓存中，并更新vuex置于isLogin:true
+        FIXME:退出登录后，再次登录进入个人主页请求头没有Authorization
+      */
+      this.$store
+        .dispatch("login", {
+          username: this.username,
+          password: this.password
         })
-        .then(response => {
-          if (response.data.code == 0) {
+        .then(res => {
+          console.log(res);
+          if (res.data.ob.code == 0) {
+            // 提示用户密码输错
             this.show = true;
           } else {
             this.show = false;
             this.$toast.success("登陆成功");
-
-            /* 将登陆状态放置于缓存中，并更新vuex置于isLogin:true */
-            localStorage.setItem(
-              "accountMes",
-              JSON.stringify({
-                nickname: response.data.userMes.nickname,
-                headimg: response.data.userMes.headimg
+            
+            this.$store.dispatch("getUserInfo").then(res=>{
+              // 调转页面
+              this.$router.push({
+                path:'/user',
+                query:{
+                  nickname:res.nickname
+                }
               })
-            );
-            localStorage.setItem("Flag", "isLogin");
-            this.$store.commit("login");
-
-            /* 跳转 */
-
-            this.$router.push({
-              path: "/user",
-              query: {
-                nickname: response.data.userMes.nickname
-              }
-            });
+            }).catch(error=>{
+              console.log(error)
+            })
           }
         })
-        .catch(err => {
-          console.log(err);
+        .catch(error => {
+          console.log(error);
         });
     }
   }

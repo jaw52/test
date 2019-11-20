@@ -4,10 +4,10 @@
     <!-- 账户卡片 -->
     <div class="name-card">
       <div @touchstart="goToHome()">
-        <van-image class="avatar" round :src="$store.state.headimg"></van-image>
+        <van-image class="avatar" round :src="userInfo.headimg"></van-image>
       </div>
       <div class="info">
-        <p class="account-name" @touchstart="goToHome">{{$store.state.nickname}}</p>
+        <p class="account-name" @touchstart="goToHome">{{userInfo.nickname}}</p>
         <span class="follow-count">{{followInfo.length}}关注</span>
       </div>
     </div>
@@ -41,7 +41,11 @@ export default {
       loadData: [], //读取到展示在页面的数据
       count: 0, //用于下拉刷新时，计数
       busy: false, //busy为false表示空闲,可执行loadMore(下拉刷新)
-      isLoading: true
+      isLoading: true,
+      userInfo:{
+        nickname:'',
+        headimg:''
+      }
     };
   },
   methods: {
@@ -54,7 +58,10 @@ export default {
         }
       });
     },
-    /* 下拉刷新处理 */
+    /* 
+      下拉刷新处理 
+      TODO:使用AJAX请求来实现下拉刷新页面
+    */
     loadMore() {
       this.busy = true;
       if (this.count < this.followInfo.length || this.count == 0) {
@@ -71,36 +78,26 @@ export default {
       }
     }
   },
+
   mounted() {
-    let testToken = "";
-
-    this.axios({
-      method: "get",
-      url: "http://localhost:8888/testJWT",
-      withCredentials: true,
-    })
+    this.$store
+      .dispatch("getUserInfo")
       .then(res => {
-        testToken = res.data;
-        
-        this.axios.defaults.headers.common['Authorization'] = `Bearer `+testToken.substring(6)
-
-        this.axios.get("http://localhost:8888/JWT").then(res => {
-          console.log(res.data);
+        // 初始页面用户信息
+        this.userInfo.nickname=res.nickname;
+        this.userInfo.headimg=res.headimg;
+        // 请求关注列表信息 
+        let postData = this.$qs.stringify({
+          nickname: res.nickname
         });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    let nickname = this.$store.state.nickname;
-    /* 请求关注列表信息 */
-    let postData = this.$qs.stringify({
-      nickname
-    });
-    this.axios
-      .post("http://localhost:8888/mobilefollow", postData)
-      .then(response => {
-        this.followInfo = response.data;
+        this.axios
+          .post("http://localhost:8888/mobilefollow", postData)
+          .then(response => {
+            this.followInfo = response.data;
+          })
+          .catch(error => {
+            console.log(error);
+          });
       })
       .catch(error => {
         console.log(error);
