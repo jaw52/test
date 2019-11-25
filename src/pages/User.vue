@@ -38,13 +38,14 @@
 			}
 		},
 		methods: {
-
+			getUserInfo(){
+				
+			}
 		},
 		mounted() {
 			
 			/* 请求用户作品信息 */
 			this.nickname=this.$route.query.nickname
-			
 			let postData=this.$qs.stringify({
 				nickname:this.nickname
 			})
@@ -54,7 +55,6 @@
 					this.introduce=response.data[0].intrduce
 					this.sex=response.data[0].sex
 					this.tag=response.data[0].user_tag
-					
 					this.workInfo=response.data
 				})
 				.catch(error => {

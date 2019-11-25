@@ -22,7 +22,7 @@
         </div>
         <!-- FIXME:v-for的id处理 -->
         <div class="tags">
-          <span class="tag" v-for="item in tagList">绘画</span>
+          <span class="tag" v-for="(item,id) in tagList" :key='id'>绘画</span>
         </div>
         <div class="footer">
           <div class="footer-content">
@@ -57,18 +57,26 @@ export default {
       list: [], //保存请求服务器得到的数据
       loadData: [], //读取到展示在页面的数据
       count: 0, //用于下拉刷新时，计数
-      tagList: [1, 2],
+      tagList: [{
+        val:1,
+        id:1
+      },{
+        val:2,
+        id:2
+      }],
       busy: false, //busy为false表示空闲,可执行loadMore(下拉刷新)
       isLoading: true
     };
   },
   methods: {
+    // 处理点赞
     fabulous(index) {
-      this.list[index][0].islike = !this.list[index][0].islike;
-      if (this.list[index][0].islike) {
-        this.list[index][0].work_like++;
+      this.list[index].islike = !this.list[index].islike;
+
+      if (this.list[index].islike) {
+        this.list[index].work_like++;
       } else {
-        this.list[index][0].work_like--;
+        this.list[index].work_like--;
       }
       return;
     },
@@ -105,6 +113,8 @@ export default {
             for (let i = 0; i < this.list.length; i++) {
               this.list[i].islike = false;
             }
+            console.log(this.list)
+
           })
           .catch(err => {
             console.log(err);

@@ -119,10 +119,10 @@ export default {
 				FIXME:使用token技术
 			*/
     logout() {
-			this.$store.dispatch("logout")
-			this.$toast.success("退出成功");
-			this.$router.go(0)
-			this.$router.push('/login')
+      this.$store.dispatch("logout");
+      this.$toast.success("退出成功");
+      this.$router.go(0);
+      this.$router.push("/login");
     },
     /* 调转至个人主页 */
     goToHome() {
@@ -160,26 +160,32 @@ export default {
         this.isSearch = true;
         this.goSearch = true;
       }
+    },
+    getUserInfo() {
+      if(!this.$store.state.token) return
+      this.$store
+        .dispatch("getUserInfo")
+        .then(res => {
+          this.userInfo.nickname = res.nickname;
+          this.userInfo.headimg = res.headimg;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mounted() {
-    this.$store
-      .dispatch("getUserInfo")
-      .then(res => {
-        this.userInfo.nickname = res.nickname;
-        this.userInfo.headimg = res.headimg;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.getUserInfo()
   },
   watch: {
     /* 路由变化时执行该方法 */
     $route: {
       handler() {
         this.isPulldown = false;
+        this.getUserInfo()
       }
     }
+
   }
 };
 </script>
